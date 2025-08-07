@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Guestbook</title>
+    <link href="static/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Guestbook</h1>
+    <form method="post">
+        <label for="nm">Name:</label>
+        <input type="text" name="name" id="nm" required>
+        <label for="eml">eMail:</label>
+        <input type="email" name="email" id="eml" required>
+        <label for="msg">Message:</label>
+        <textarea name="message" id="msg" rows="5" required></textarea>
+        <button type="submit">Post</button>
+    </form>
+    {{ range .entries }}
+        <div class="entry">
+            <div>
+                <a href="mailto:{{ .Email }}">{{ .Name }}</a><br>
+                <small>{{ .Posted }}</small>
+            </div>
+            <div class="message">{{ .Message }}</div>
+        </div>
+    {{ end }}
+    <div class="pages">
+        Page
+        {{ range $n := .pageNumbers }}
+            {{ if eq $n $.page }}
+                {{ $n }}
+            {{ else }}
+                <a href="?page={{ $n }}">{{ $n }}</a>
+            {{ end }}
+        {{ else }}
+            1
+        {{ end }}
+    </div>
+</div>
+</body>
+</html>
